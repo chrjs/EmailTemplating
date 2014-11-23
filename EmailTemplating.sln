@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailTemplating", "EmailTemplating\EmailTemplating.csproj", "{3A3EE87A-DE95-4995-AD1E-941B1F4D7767}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailTemplatingTest", "EmailTemplatingTest\EmailTemplatingTest.csproj", "{519E391D-F928-4A68-8D57-97EDE8A46D62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailTemplatingUnitTest", "UnitTestProject1\EmailTemplatingUnitTest.csproj", "{99A480B2-F0DD-476C-BAD4-6B841320737B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +17,13 @@ Global
 		{3A3EE87A-DE95-4995-AD1E-941B1F4D7767}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A3EE87A-DE95-4995-AD1E-941B1F4D7767}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A3EE87A-DE95-4995-AD1E-941B1F4D7767}.Release|Any CPU.Build.0 = Release|Any CPU
-		{519E391D-F928-4A68-8D57-97EDE8A46D62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{519E391D-F928-4A68-8D57-97EDE8A46D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{519E391D-F928-4A68-8D57-97EDE8A46D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{519E391D-F928-4A68-8D57-97EDE8A46D62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99A480B2-F0DD-476C-BAD4-6B841320737B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99A480B2-F0DD-476C-BAD4-6B841320737B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99A480B2-F0DD-476C-BAD4-6B841320737B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99A480B2-F0DD-476C-BAD4-6B841320737B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = EmailTemplatingTest\EmailTemplatingTest.csproj

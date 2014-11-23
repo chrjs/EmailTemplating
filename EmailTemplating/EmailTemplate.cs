@@ -14,7 +14,7 @@ namespace EmailTemplating
     public Placeholder(string placeholder)
     {
       this.PlaceholderString = placeholder;
-      placeholder = placeholder.Replace("@", "");
+      placeholder = placeholder.Replace("<%", "").Replace("%>", "");
 
       string[] fields = placeholder.Split(":".ToCharArray());
 
@@ -76,8 +76,9 @@ namespace EmailTemplating
         return template;
 
       string mastertemplate = File.ReadAllText(masterTemplateFilePath, encoding);
+      mastertemplate = mastertemplate.Replace("<%template%>", template);
       mastertemplate = ProcessPlaceholders(mastertemplate);
-      return mastertemplate.Replace("@template@", template);
+      return mastertemplate;
     }
 
     public void AddDataObject(string code, object dataObject)
@@ -91,7 +92,7 @@ namespace EmailTemplating
     #region Protected methods
     private string ProcessPlaceholders(string template)
     {
-      Regex regex = new Regex("@(.)*@");
+      Regex regex = new Regex("<%([^%])*%>");
 
       MatchCollection matches = regex.Matches(template);
       foreach (Match match in matches)
@@ -100,7 +101,16 @@ namespace EmailTemplating
 
         if (this.placeholders.ContainsKey(placeholder.RootObjectKey))
         {
-          string value = this.GetObjectPropertyValue(this.placeholders[placeholder.RootObjectKey], placeholder, 1);
+          string value;
+          if (placeholder.Fields.Length == 1)
+          {
+            value = this.placeholders[placeholder.RootObjectKey].ToString();
+          }
+          else
+          {
+            value = this.GetObjectPropertyValue(this.placeholders[placeholder.RootObjectKey], placeholder, 1);
+          }
+
           template = template.Replace(placeholder.PlaceholderString, System.Net.WebUtility.HtmlEncode(value));
         }
         else
@@ -132,11 +142,25 @@ namespace EmailTemplating
       {
         if (!String.IsNullOrEmpty(placeholder.Format))
         {
-          if (value is DateTime)
+          if (value is bool)
+          {
+            string[] tokens = placeholder.Format.Split("|".ToCharArray());
+            if (tokens.Length != 2)
+            {
+              new ApplicationException("Field format \"" + placeholder.Format + "\" not valid.");
+            }
+            return (bool)value ? tokens[0] : tokens[1];
+          }
+          else if (value is DateTime)
+          {
             return ((DateTime)value).ToString(placeholder.Format);
+          }
           else
+          {
             return String.Format(placeholder.Format, value);
-        } else
+          }
+        } 
+        else
         {
           return value.ToString();
         }
