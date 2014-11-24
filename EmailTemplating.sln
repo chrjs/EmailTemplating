@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailTemplating", "EmailTemplating\EmailTemplating.csproj", "{3A3EE87A-DE95-4995-AD1E-941B1F4D7767}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailTemplatingUnitTest", "UnitTestProject1\EmailTemplatingUnitTest.csproj", "{99A480B2-F0DD-476C-BAD4-6B841320737B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailTemplatingUnitTest", "EmailTemplatingUnitTest\EmailTemplatingUnitTest.csproj", "{99A480B2-F0DD-476C-BAD4-6B841320737B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

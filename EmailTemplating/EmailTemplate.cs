@@ -162,7 +162,7 @@ namespace EmailTemplating
         } 
         else
         {
-          return value.ToString();
+          return value != null ? value.ToString() : "";
         }
       } 
       else
