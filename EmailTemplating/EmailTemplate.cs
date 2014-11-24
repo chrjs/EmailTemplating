@@ -16,17 +16,15 @@ namespace EmailTemplating
       this.PlaceholderString = placeholder;
       placeholder = placeholder.Replace("<%", "").Replace("%>", "");
 
-      string[] fields = placeholder.Split(":".ToCharArray());
-
-      this.Path = fields[0];
-
-      if (fields.Length == 2)
+      int idx = placeholder.IndexOf(":");
+      if (idx > 0)
       {
-        this.Format = fields[1];
-      } 
-      else if (fields.Length > 2)
+        this.Path = placeholder.Substring(0, idx);
+        this.Format = placeholder.Substring(idx + 1);
+      }
+      else
       {
-        throw new ApplicationException("Invalid placeholder format: " + placeholder);
+        this.Path = placeholder;
       }
 
       this.Fields = this.Path.Split(".".ToCharArray());
@@ -133,7 +131,7 @@ namespace EmailTemplating
       PropertyInfo p = dataObject.GetType().GetProperty(propertyName);
       if (p == null)
       {
-        new ApplicationException("Field named \"" + propertyName + "\" not found.");
+        throw new ApplicationException("Field named \"" + propertyName + "\" not found.");
       }
 
       object value = p.GetValue(dataObject);
@@ -142,18 +140,38 @@ namespace EmailTemplating
       {
         if (!String.IsNullOrEmpty(placeholder.Format))
         {
+          string[] tokens = placeholder.Format.Split("|".ToCharArray());
           if (value is bool)
           {
-            string[] tokens = placeholder.Format.Split("|".ToCharArray());
             if (tokens.Length != 2)
             {
-              new ApplicationException("Field format \"" + placeholder.Format + "\" not valid.");
+              throw new ApplicationException("Field format \"" + placeholder.Format + "\" not valid.");
             }
+
             return (bool)value ? tokens[0] : tokens[1];
+          }
+          else if (value is string)
+          {
+            if (tokens.Length > 2)
+            {
+              throw new ApplicationException("Field format \"" + placeholder.Format + "\" not valid.");
+            }
+            else if (tokens.Length == 2)
+            {
+              return String.Format(String.IsNullOrEmpty((string)value) ? tokens[0] : tokens[1], value);
+            }
+            else
+            {
+              return String.Format(placeholder.Format, value);
+            }
           }
           else if (value is DateTime)
           {
             return ((DateTime)value).ToString(placeholder.Format);
+          }
+          else if (value == null && tokens.Length == 2)
+          {
+            return tokens[1];
           }
           else
           {
